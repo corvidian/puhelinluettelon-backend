@@ -1,0 +1,27 @@
+{
+  "name": "puhelinluettelon-backend",
+  "version": "1.0.0",
+  "description": "Exercise for https://fullstackopen.com/osa3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corvidian/puhelinluettelon-backend.git"
+  },
+  "author": "Topias Heinonen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corvidian/puhelinluettelon-backend/issues"
+  },
+  "homepage": "https://github.com/corvidian/puhelinluettelon-backend#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
