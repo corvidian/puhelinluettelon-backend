@@ -3,7 +3,17 @@ const morgan = require("morgan");
 
 const app = express();
 app.use(express.json());
-app.use(morgan('tiny'));
+
+morgan.token("body", (req, res) => {
+  // Log - if there's no body and {} if there's an empty body
+  if (req.get("Content-Length")) {
+    return JSON.stringify(req.body);
+  }
+  return null;
+});
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms :body")
+);
 
 let persons = [
   {
