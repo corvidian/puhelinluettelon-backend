@@ -30,7 +30,14 @@ const persons = [
 ];
 
 app.get("/", (req, res) => {
-  res.send("<p>People are at <a href=\"/api/persons\">/api/persons</a> </p>");
+  res.send('<p>People are at <a href="/api/persons">/api/persons</a> </p>');
+});
+
+app.get("/info", (req, res) => {
+  res.send(
+    `<p>Phonebook has info for ${persons.length} people</p>
+    <p>${new Date()}</p>`
+  );
 });
 
 app.get("/api/persons", (request, response) => {
