@@ -1,8 +1,10 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require('cors')
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 morgan.token("body", (req, res) => {
   // Log - if there's no body and {} if there's an empty body
