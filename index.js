@@ -1,10 +1,10 @@
 const express = require("express");
 const morgan = require("morgan");
-const cors = require('cors')
+const cors = require("cors");
 
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 morgan.token("body", (req, res) => {
   // Log - if there's no body and {} if there's an empty body
@@ -114,7 +114,7 @@ const generateId = () => {
   return Math.floor(big_random);
 };
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
