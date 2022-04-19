@@ -64,9 +64,9 @@ app.delete("/api/persons/:id", (request, response, next) => {
 });
 
 app.post("/api/persons", (request, response, next) => {
-  const body = request.body;
+  const { name, number } = request.body;
 
-  const person = new Person(parsePerson(body));
+  const person = new Person({ name, number });
 
   person
     .save()
@@ -91,13 +91,6 @@ app.put("/api/persons/:id", (request, response, next) => {
     })
     .catch((error) => next(error));
 });
-
-const parsePerson = (body) => {
-  return {
-    name: body.name,
-    number: body.number,
-  };
-};
 
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
