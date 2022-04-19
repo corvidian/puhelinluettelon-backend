@@ -89,27 +89,56 @@ app.delete("/api/persons/:id", (request, response, next) => {
 app.post("/api/persons", (request, response, next) => {
   const body = request.body;
 
-  if (!body.name) {
-    return response.status(400).json({
-      error: "name missing",
-    });
-  }
-  if (!body.number) {
-    return response.status(400).json({
-      error: "number missing",
-    });
+  const personError = validatePerson(body);
+  if (personError) {
+    return response.status(400).json({ error: personError });
   }
 
-  const person = new Person({
-    name: body.name,
-    number: body.number,
-  });
+  const person = new Person(parsePerson(body));
 
   person
     .save()
     .then((savedPerson) => response.json(savedPerson))
     .catch((error) => next(error));
 });
+
+app.put("/api/persons/:id", (request, response, next) => {
+  const body = request.body;
+
+  const personError = validatePerson(body);
+  if (personError) {
+    return response.status(400).json({ error: personError });
+  }
+
+  const person = parsePerson(body);
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then((updatedPerson) => {
+      if (updatedPerson) {
+        response.json(updatedPerson);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
+});
+
+const validatePerson = (body) => {
+  if (!body.name) {
+    return "name missing";
+  }
+  if (!body.number) {
+    return "number missing";
+  }
+  return null;
+};
+
+const parsePerson= (body) => {
+  return {
+    name: body.name,
+    number: body.number,
+  };
+};
 
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
