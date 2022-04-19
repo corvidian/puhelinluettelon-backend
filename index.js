@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.static("build"));
 app.use(cors());
 
-morgan.token("body", (req, res) => {
+morgan.token("body", (req) => {
   // Log - if there's no body and {} if there's an empty body
   if (req.get("Content-Length")) {
     return JSON.stringify(req.body);
@@ -21,7 +21,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.send('<p>People are at <a href="/api/persons">/api/persons</a> </p>');
+  res.send('<p>People are at <a href="/api/persons">/api/persons</a> </p>'); //eslint-disable-line quotes
 });
 
 app.get("/info", (req, res, next) => {
@@ -57,7 +57,7 @@ app.get("/api/persons/:id", (request, response, next) => {
 
 app.delete("/api/persons/:id", (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then((result) => {
+    .then(() => {
       response.status(204).end();
     })
     .catch((error) => next(error));
