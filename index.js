@@ -66,11 +66,6 @@ app.delete("/api/persons/:id", (request, response, next) => {
 app.post("/api/persons", (request, response, next) => {
   const body = request.body;
 
-  const personError = validatePerson(body);
-  if (personError) {
-    return response.status(400).json({ error: personError });
-  }
-
   const person = new Person(parsePerson(body));
 
   person
@@ -81,11 +76,6 @@ app.post("/api/persons", (request, response, next) => {
 
 app.put("/api/persons/:id", (request, response, next) => {
   const { name, number } = request.body;
-
-  const personError = validatePerson({name, number});
-  if (personError) {
-    return response.status(400).json({ error: personError });
-  }
 
   Person.findByIdAndUpdate(
     request.params.id,
@@ -101,13 +91,6 @@ app.put("/api/persons/:id", (request, response, next) => {
     })
     .catch((error) => next(error));
 });
-
-const validatePerson = (body) => {
-  if (!body.number) {
-    return "number missing";
-  }
-  return null;
-};
 
 const parsePerson = (body) => {
   return {

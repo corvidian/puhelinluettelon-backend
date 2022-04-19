@@ -15,10 +15,18 @@ mongoose
 const personSchema = new mongoose.Schema({
   name: {
     type: String,
-    minlength: 3,
-    required: true
+    minlength: [3, "Name too short"],
+    required: [true, "Missing name"],
   },
-  number: String,
+  number: {
+    type: String,
+    minlength: [8, "Number too short"],
+    validate: {
+      validator: (v) => /^\d{2,3}-\d+$/.test(v),
+      message: (props) => `${props.value} is not a valid phone number`,
+    },
+    required: [true, "Missing number"],
+  },
 });
 
 personSchema.set("toJSON", {
